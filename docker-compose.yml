@@ -1,0 +1,51 @@
+version: '3.8'
+services:
+
+  jwt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - http_proxy=${http_proxy}
+        - https_proxy=${https_proxy}
+    ports:
+      - "8080:8080"
+      - "8849:8849"
+      - "9009:9009"
+      - "4848:4848"
+    volumes:
+      - ./dist:/opt/payara/appserver/glassfish/domains/production/autodeploy
+    depends_on:
+      - keycloak
+    networks:
+      - app
+
+  callback:
+    image: mockserver/mockserver
+    volumes:
+      - .:/config
+    environment:
+      - MOCKSERVER_INITIALIZATION_JSON_PATH=/config/init.json
+    ports:
+      - "8082:1080"
+    networks:
+      - app
+    command: "-logLevel DEBUG -serverPort 1080"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:11.0.2
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./realm-export.json:/tmp/realm-export.json
+    networks:
+      - app
+    command: "-Dkeycloak.migration.action=import -Dkeycloak.migration.provider=singleFile -Dkeycloak.migration.file=/tmp/realm-export.json -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+
+networks:
+  app:
+    driver: bridge
+

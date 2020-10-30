@@ -1,0 +1,13 @@
+[
+  {
+    "httpRequest": {
+      "method": "GET",
+      "path": "/callback"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": { },
+      "body": "Now, look into the logs of our mockserver to get the authorization code ... (docker-compose logs -f callback)"
+    }
+  }
+]
