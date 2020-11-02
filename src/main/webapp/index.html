@@ -106,7 +106,12 @@
     const url = new URL(window.location);
     const id = url.searchParams.get("id");
     if (id) {
-        document.querySelector('.output').querySelector('.token').innerText = id;
+        let jwtParts = id.split('.');
+
+        document.querySelector('.output').querySelector('.token').innerText =
+            atob(jwtParts[0]) + '\n.\n' +
+            atob(jwtParts[1]) + '\n\n==\n\n' +
+            id;
         document.querySelector('.output').removeAttribute("hidden");
     }
 </script>
