@@ -8,6 +8,6 @@ import javax.ws.rs.core.Application;
 
 @ApplicationPath("rest")
 @DeclareRoles({"stefan"})
-@LoginConfig(authMethod = "MP-JWT", realmName = "intranetb2x")
+@LoginConfig(authMethod = "MP-JWT")
 public class JAXRSConfiguration extends Application {
 }

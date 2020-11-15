@@ -19,6 +19,12 @@
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>fish.payara.extras</groupId>
+            <artifactId>payara-embedded-all</artifactId>
+            <version>5.201</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>jwt-by-example</finalName>
